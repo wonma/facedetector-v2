@@ -6,10 +6,17 @@
 }
 
 .App__header-wrapper {
-  height: 100%;
-  margin: 0 auto;
-  max-width: 1140px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.App__main-wrapper {
+  padding-top: 30px;
+}
+
+.container {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1140px;
 }
