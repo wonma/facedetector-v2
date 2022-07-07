@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from '../logo.svg';
 import './Logo.css';
 
 const Logo = () => {
-  return <img className='logo-img' src={logo} />;
+  return <h1>Face Detector</h1>;
 };
 
 export default Logo;
