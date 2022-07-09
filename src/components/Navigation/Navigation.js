@@ -4,10 +4,12 @@ import './Navigation.css';
 const Navigation = () => {
   return (
     <nav className='nav'>
-      <a className='button' href='#'>
+      {/* <a className='button' href='#'>
         Log in
+      </a> */}
+      <a className='button' href='#'>
+        Log out
       </a>
-      {/* <a className='button' href='#'>Log out</a> */}
     </nav>
   );
 };

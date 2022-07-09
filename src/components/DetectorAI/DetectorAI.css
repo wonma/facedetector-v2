@@ -1,0 +1,32 @@
+.detectorAI {
+  flex: 3 1 0;
+}
+
+.detectorAI__card {
+  background: #ffffff;
+  border: 1px solid #e4e4e4;
+  padding: 30px 30px;
+  text-align: center;
+}
+
+.detectorAI__title {
+  font-size: 1.2em;
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+  font-weight: 400;
+  margin-bottom: 0.8em;
+}
+
+.detectorAI__heading {
+  font-size: 1.2em;
+  margin-bottom: 0.2em;
+}
+
+.detectorAI__rule-info {
+  display: block;
+  font-size: 0.8em;
+  font-weight: 600;
+  margin: 1em 0;
+  color: #005788;
+}

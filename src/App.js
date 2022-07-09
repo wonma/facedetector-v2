@@ -3,7 +3,10 @@ import React from 'react';
 import './App.css';
 import Logo from './components/Logo/Logo';
 import Navigation from './components/Navigation/Navigation';
+import DetectorAI from './components/DetectorAI/DetectorAI';
+import UserStatus from './components/UserStatus/UserStatus';
 import LoginForm from './components/LoginForm/LoginForm';
+import SignupForm from './components/SignupForm/SignupForm';
 
 function App() {
   return (
@@ -15,8 +18,13 @@ function App() {
         </div>
       </header>
       <section className='App__main'>
-        <div className='App__main-wrapper container'>
-          <LoginForm />
+        <div className='container container-content flex'>
+          <UserStatus />
+          <DetectorAI />
+          {/*  
+            <LoginForm />
+            <SignupForm />
+        */}
         </div>
       </section>
     </div>

@@ -1,0 +1,18 @@
+.imageDisplayer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.imageDisplayer__imgbox {
+  background: #4a1e41;
+  border-radius: 4px;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imageDisplayer__imgbox > img {
+  padding: 30px;
+  width: 350px;
+}

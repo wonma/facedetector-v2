@@ -1,0 +1,11 @@
+.scoreAlarm {
+  width: 7em;
+  height: 7em;
+  padding: 0.8em;
+  background: #dcff78;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-left: 20px;
+}
