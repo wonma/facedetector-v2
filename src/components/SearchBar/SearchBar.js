@@ -1,15 +1,20 @@
 import React from 'react';
 import './SearchBar.css';
 
-const SearchBar = () => {
+const SearchBar = ({ onInputChange, inputValue, onEnter, onClick }) => {
   return (
     <div className='searchBar'>
       <input
         className='searchBar__input'
         type='text'
         placeholder='Paste the image url here'
-      ></input>
-      <button className='button--shrink'>Find Faces</button>
+        onChange={onInputChange}
+        onKeyDown={onEnter}
+        value={inputValue}
+      />
+      <button className='button--shrink' onClick={onClick}>
+        Find Faces
+      </button>
     </div>
   );
 };

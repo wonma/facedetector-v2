@@ -12,7 +12,13 @@
   justify-content: center;
   align-items: center;
 }
+
 .imageDisplayer__imgbox > img {
   padding: 30px;
   width: 350px;
+}
+
+.imageDisplayer__boundingbox {
+  position: absolute;
+  box-shadow: 0 0 0 3px #149df2 inset;
 }
