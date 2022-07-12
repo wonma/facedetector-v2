@@ -3,7 +3,15 @@ import './DetectorAI.css';
 import SearchBar from '../SearchBar/SearchBar';
 import ImageDisplayer from '../ImageDisplayer/ImageDisplayer';
 
-const DetectorAI = ({ onInputChange, inputValue, onClick, onEnter }) => {
+const DetectorAI = ({
+  onInputChange,
+  inputValue,
+  boxes,
+  imgUrl,
+  onClick,
+  onEnter
+}) => {
+  console.log('DetectorAI rendered');
   return (
     <div className='detectorAI'>
       <h1 className='detectorAI__title'>Your Detector AI</h1>
@@ -18,7 +26,7 @@ const DetectorAI = ({ onInputChange, inputValue, onClick, onEnter }) => {
           onEnter={onEnter}
           inputValue={inputValue}
         />
-        <ImageDisplayer />
+        <ImageDisplayer boxes={boxes} imgUrl={imgUrl} />
       </div>
     </div>
   );

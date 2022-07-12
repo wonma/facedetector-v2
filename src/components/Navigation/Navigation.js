@@ -2,6 +2,7 @@ import React from 'react';
 import './Navigation.css';
 
 const Navigation = () => {
+  console.log('Navigation rendered');
   return (
     <nav className='nav'>
       {/* <a className='button' href='#'>

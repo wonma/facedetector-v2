@@ -19,40 +19,53 @@ class App extends React.Component {
     super(props);
     this.state = {
       input: '',
+      boxes: [],
+      imgUrl: '',
       isLoggedin: false
     };
   }
+
+  updateBoxState = boxInsetArray => {
+    this.setState({ boxes: boxInsetArray });
+  };
+
+  calculateBox = boxes => {
+    return boxes.map(box => {
+      const {
+        top_row,
+        right_col,
+        bottom_row,
+        left_col
+      } = box.region_info.bounding_box;
+      return {
+        top: top_row * 100,
+        bottom: 100 - bottom_row * 100,
+        left: left_col * 100,
+        right: 100 - right_col * 100
+      };
+    });
+  };
 
   onInputChange = e => {
     this.setState({ input: e.target.value });
   };
 
-  // createBoundingBox = ({ top_row, right_col, bottom_row, left_col }) => {
-  //   console.log(top_row);
-  //   return (
-  //     <div
-  //       className='imageDisplayer__boundingbox'
-  //       style={`inset: ${top_row * 100}% ${right_col * 100}% ${bottom_row *
-  //         100}% ${left_col * 100}%`}
-  //     ></div>
-  //   );
-  // };
-
   onEnter = e => {
     if (e.keyCode == 13) {
-      this.setState({ input: '' });
+      this.setState({ boxes: [] });
+      this.setState({ imgUrl: this.state.input });
+
       app.models
-        .predict(
-          'a403429f2ddf4b49b307e318f00e528b',
-          'https://manofmany.com/wp-content/uploads/2021/01/Yael-Shelbia-2jpg.jpg'
-        )
+        .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
         .then(response => {
-          console.log(
-            response.outputs[0].data.regions[0].region_info.bounding_box
-          );
+          console.log(response);
+          this.setState({
+            box: this.updateBoxState(
+              this.calculateBox(response.outputs[0].data.regions)
+            )
+          });
         });
     }
-    //  console.log(Clarifai);
   };
 
   onClick = () => {
@@ -60,6 +73,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log('App rendered');
     return (
       <div className='App'>
         <header className='App__header'>
@@ -76,6 +90,8 @@ class App extends React.Component {
               onClick={this.onClick}
               onEnter={this.onEnter}
               inputValue={this.state.input}
+              boxes={this.state.boxes}
+              imgUrl={this.state.imgUrl}
             />
             {/*  
             <LoginForm />

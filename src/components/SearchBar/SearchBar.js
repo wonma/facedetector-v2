@@ -2,6 +2,7 @@ import React from 'react';
 import './SearchBar.css';
 
 const SearchBar = ({ onInputChange, inputValue, onEnter, onClick }) => {
+  console.log('Search Bar rendered');
   return (
     <div className='searchBar'>
       <input

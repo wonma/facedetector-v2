@@ -5,16 +5,16 @@
 }
 
 .imageDisplayer__imgbox {
+  position: relative;
   background: #4a1e41;
   border-radius: 4px;
-  min-width: 400px;
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .imageDisplayer__imgbox > img {
-  padding: 30px;
   width: 350px;
 }
 
