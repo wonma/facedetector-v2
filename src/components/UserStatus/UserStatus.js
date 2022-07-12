@@ -1,20 +1,21 @@
 import React from 'react';
 import './UserStatus.css';
 
-const UserStatus = () => {
+const UserStatus = ({ totalScore, credits, totalAttempts }) => {
   return (
     <div className='userStatus'>
       <h2 className='userStatus__title'>Howdy, Wonmi!</h2>
       <div className='userStatus__card'>
         <p className='metric'>
-          Score:<span className='metric__number-big'>60</span>
+          Score:<span className='metric__number-big'>{totalScore}</span>
         </p>
         <span className='hr-line'></span>
         <p className='metric'>
-          Credits: <span className='metric__number'>100</span>
+          Credits: <span className='metric__number'>{credits}</span>
         </p>
         <p className='metric'>
-          Total attempts: <span className='metric__number'>1</span>
+          Total attempts:{' '}
+          <span className='metric__number'>{totalAttempts}</span>
         </p>
       </div>
     </div>

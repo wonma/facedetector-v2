@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './ImageDisplayer.css';
 import ScoreAlarm from '../ScoreAlarm/ScoreAlarm';
 
-const ImageDisplayer = ({ boxes, imgUrl }) => {
+const ImageDisplayer = ({ boxes, imgUrl, boxScore }) => {
   const divBoxes = boxes.map(box => {
     const { top, right, bottom, left } = box;
     return (
       <div
-        className='imageDisplayer__boundingbox'
+        key={top}
+        className='imageDisplayer__boundingbox animate zoom-in'
         style={{
           inset: `${top}% ${right}% ${bottom}% ${left}%`
         }}
@@ -21,7 +22,7 @@ const ImageDisplayer = ({ boxes, imgUrl }) => {
         <img id='img' src={imgUrl} />
         {divBoxes}
       </div>
-      <ScoreAlarm />
+      <ScoreAlarm boxScore={boxScore} />
     </div>
   );
 };

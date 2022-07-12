@@ -21,7 +21,16 @@ class App extends React.Component {
       input: '',
       boxes: [],
       imgUrl: '',
-      isLoggedin: false
+      userState: {
+        totalScore: 0,
+        credits: 300,
+        totalAttempts: 0
+      },
+      isLoggedin: false,
+      boxScore: {
+        active: false,
+        score: null
+      }
     };
   }
 
@@ -52,18 +61,34 @@ class App extends React.Component {
 
   onEnter = e => {
     if (e.keyCode == 13) {
-      this.setState({ boxes: [] });
-      this.setState({ imgUrl: this.state.input });
+      this.setState({
+        boxes: [],
+        imgUrl: this.state.input,
+        boxScore: { active: false }
+      });
 
       app.models
         .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
         .then(response => {
-          console.log(response);
+          const dataArray = response.outputs[0].data.regions;
+          this.updateBoxState(this.calculateBox(dataArray));
           this.setState({
-            box: this.updateBoxState(
-              this.calculateBox(response.outputs[0].data.regions)
-            )
+            boxScore: {
+              active: true,
+              score: dataArray.length * 10
+            }
           });
+          this.setState({
+            userState: {
+              totalAttempts: this.state.userState.totalAttempts + 1,
+              totalScore:
+                this.state.userState.totalScore + dataArray.length * 10,
+              credits: this.state.userState.credits - 10
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   };
@@ -84,7 +109,11 @@ class App extends React.Component {
         </header>
         <section className='App__main'>
           <div className='container container-content flex'>
-            <UserStatus />
+            <UserStatus
+              totalScore={this.state.userState.totalScore}
+              credits={this.state.userState.credits}
+              totalAttempts={this.state.userState.totalAttempts}
+            />
             <DetectorAI
               onInputChange={this.onInputChange}
               onClick={this.onClick}
@@ -92,6 +121,7 @@ class App extends React.Component {
               inputValue={this.state.input}
               boxes={this.state.boxes}
               imgUrl={this.state.imgUrl}
+              boxScore={this.state.boxScore}
             />
             {/*  
             <LoginForm />

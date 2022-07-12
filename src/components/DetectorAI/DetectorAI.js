@@ -7,11 +7,12 @@ const DetectorAI = ({
   onInputChange,
   inputValue,
   boxes,
+  boxScore,
   imgUrl,
   onClick,
   onEnter
 }) => {
-  console.log('DetectorAI rendered');
+  console.log(boxes);
   return (
     <div className='detectorAI'>
       <h1 className='detectorAI__title'>Your Detector AI</h1>
@@ -26,7 +27,7 @@ const DetectorAI = ({
           onEnter={onEnter}
           inputValue={inputValue}
         />
-        <ImageDisplayer boxes={boxes} imgUrl={imgUrl} />
+        <ImageDisplayer boxes={boxes} imgUrl={imgUrl} boxScore={boxScore} />
       </div>
     </div>
   );
