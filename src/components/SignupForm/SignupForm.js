@@ -1,11 +1,11 @@
 import React from 'react';
 import './SignupForm.css';
 
-const SignupForm = () => {
+const SignupForm = ({ onRouteChange }) => {
   return (
     <div className='form__wrapper'>
       <h1 className='form__title'>Sign up</h1>
-      <form>
+      <div>
         <div className='form__field'>
           <label className='form__label'>First Name</label>
           <input className='form__input' type='text' />
@@ -27,7 +27,18 @@ const SignupForm = () => {
           <input className='form__input' type='password' />
         </div>
         <button>Sign up</button>
-      </form>
+        <small>
+          Already have an account?
+          <span
+            className='textlink'
+            onClick={() => {
+              onRouteChange('login');
+            }}
+          >
+            Log in
+          </span>
+        </small>
+      </div>
     </div>
   );
 };

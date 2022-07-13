@@ -42,3 +42,14 @@ button {
   color: #ffffff;
   cursor: pointer;
 }
+
+small {
+  display: block;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.textlink {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}

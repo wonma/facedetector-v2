@@ -26,7 +26,7 @@ class App extends React.Component {
         credits: 300,
         totalAttempts: 0
       },
-      isLoggedin: false,
+      route: 'login',
       boxScore: {
         active: false,
         score: null
@@ -97,6 +97,10 @@ class App extends React.Component {
     console.log(this.state.input);
   };
 
+  onRouteChange = routeName => {
+    this.setState({ route: routeName });
+  };
+
   render() {
     console.log('App rendered');
     return (
@@ -104,30 +108,39 @@ class App extends React.Component {
         <header className='App__header'>
           <div className='App__header-wrapper container'>
             <Logo />
-            <Navigation />
+            <Navigation
+              route={this.state.route}
+              onRouteChange={this.onRouteChange}
+            />
           </div>
         </header>
         <section className='App__main'>
-          <div className='container container-content flex'>
-            <UserStatus
-              totalScore={this.state.userState.totalScore}
-              credits={this.state.userState.credits}
-              totalAttempts={this.state.userState.totalAttempts}
-            />
-            <DetectorAI
-              onInputChange={this.onInputChange}
-              onClick={this.onClick}
-              onEnter={this.onEnter}
-              inputValue={this.state.input}
-              boxes={this.state.boxes}
-              imgUrl={this.state.imgUrl}
-              boxScore={this.state.boxScore}
-            />
-            {/*  
-            <LoginForm />
-            <SignupForm />
-        */}
-          </div>
+          {this.state.route === 'home' ? (
+            <div className='container container-content flex'>
+              <UserStatus
+                totalScore={this.state.userState.totalScore}
+                credits={this.state.userState.credits}
+                totalAttempts={this.state.userState.totalAttempts}
+              />
+              <DetectorAI
+                onInputChange={this.onInputChange}
+                onClick={this.onClick}
+                onEnter={this.onEnter}
+                inputValue={this.state.input}
+                boxes={this.state.boxes}
+                imgUrl={this.state.imgUrl}
+                boxScore={this.state.boxScore}
+              />
+            </div>
+          ) : (
+            <div className='container'>
+              {this.state.route === 'login' ? (
+                <LoginForm onRouteChange={this.onRouteChange} />
+              ) : (
+                <SignupForm onRouteChange={this.onRouteChange} />
+              )}
+            </div>
+          )}
         </section>
       </div>
     );
