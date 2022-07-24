@@ -137,7 +137,7 @@ class App extends React.Component {
               />
             </div>
           ) : (
-            <div className='container'>
+            <div className='container container-content'>
               {this.state.route === 'login' ? (
                 <LoginForm onRouteChange={this.onRouteChange} />
               ) : (
