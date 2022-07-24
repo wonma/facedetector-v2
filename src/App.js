@@ -59,42 +59,46 @@ class App extends React.Component {
     this.setState({ input: e.target.value });
   };
 
+  getImageResult = () => {
+    this.setState({
+      boxes: [],
+      imgUrl: this.state.input,
+      boxScore: { active: false }
+    });
+
+    const { totalAttempts, totalScore, credits } = this.state.userState;
+    app.models
+      .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
+      .then(response => {
+        const dataArray = response.outputs[0].data.regions;
+        this.updateBoxState(this.calculateBox(dataArray));
+        this.setState({
+          boxScore: {
+            active: true,
+            score: dataArray.length * 10
+          }
+        });
+        this.setState({
+          userState: {
+            totalAttempts: totalAttempts + 1,
+            totalScore: totalScore + dataArray.length * 10,
+            credits: credits - 10
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   onEnter = e => {
     if (e.keyCode == 13) {
-      this.setState({
-        boxes: [],
-        imgUrl: this.state.input,
-        boxScore: { active: false }
-      });
-
-      app.models
-        .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
-        .then(response => {
-          const dataArray = response.outputs[0].data.regions;
-          this.updateBoxState(this.calculateBox(dataArray));
-          this.setState({
-            boxScore: {
-              active: true,
-              score: dataArray.length * 10
-            }
-          });
-          this.setState({
-            userState: {
-              totalAttempts: this.state.userState.totalAttempts + 1,
-              totalScore:
-                this.state.userState.totalScore + dataArray.length * 10,
-              credits: this.state.userState.credits - 10
-            }
-          });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.getImageResult();
     }
   };
 
   onClick = () => {
-    console.log(this.state.input);
+    this.getImageResult();
   };
 
   onRouteChange = routeName => {
