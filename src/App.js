@@ -21,10 +21,14 @@ class App extends React.Component {
       input: '',
       boxes: [],
       imgUrl: '',
-      userState: {
-        totalScore: 0,
-        credits: 300,
-        totalAttempts: 0
+      user: {
+        id: '',
+        email: '',
+        firstName: '',
+        activity: {
+          totalScore: 0,
+          totalCredit: 0
+        }
       },
       route: 'login',
       boxScore: {
@@ -59,6 +63,21 @@ class App extends React.Component {
     this.setState({ input: e.target.value });
   };
 
+  loadUser = data => {
+    console.log(data);
+    this.setState({
+      user: {
+        id: data.id,
+        email: data.email,
+        firstName: data.firstName,
+        activity: {
+          totalScore: data.activity.totalScore,
+          totalCredit: data.activity.totalCredit
+        }
+      }
+    });
+  };
+
   getImageResult = () => {
     this.setState({
       boxes: [],
@@ -66,7 +85,7 @@ class App extends React.Component {
       boxScore: { active: false }
     });
 
-    const { totalAttempts, totalScore, credits } = this.state.userState;
+    const { totalScore, totalCredit } = this.state.user.activity;
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
       .then(response => {
@@ -79,10 +98,9 @@ class App extends React.Component {
           }
         });
         this.setState({
-          userState: {
-            totalAttempts: totalAttempts + 1,
+          user: {
             totalScore: totalScore + dataArray.length * 10,
-            credits: credits - 10
+            credits: totalCredit - 10
           }
         });
       })
@@ -122,9 +140,9 @@ class App extends React.Component {
           {this.state.route === 'home' ? (
             <div className='container container-content flex'>
               <UserStatus
-                totalScore={this.state.userState.totalScore}
-                credits={this.state.userState.credits}
-                totalAttempts={this.state.userState.totalAttempts}
+                totalScore={this.state.user.activity.totalScore}
+                totalCredit={this.state.user.activity.totalCredit}
+                firstName={this.state.user.firstName}
               />
               <DetectorAI
                 onInputChange={this.onInputChange}
@@ -139,7 +157,10 @@ class App extends React.Component {
           ) : (
             <div className='container container-content'>
               {this.state.route === 'login' ? (
-                <LoginForm onRouteChange={this.onRouteChange} />
+                <LoginForm
+                  onRouteChange={this.onRouteChange}
+                  loadUser={this.loadUser}
+                />
               ) : (
                 <SignupForm onRouteChange={this.onRouteChange} />
               )}

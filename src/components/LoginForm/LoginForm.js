@@ -29,14 +29,18 @@ class LoginForm extends Component {
         password: this.state.password
       })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data === 'success') {
-          this.props.onRouteChange('home');
+      .then(response => {
+        if (response.status == 400) {
+          throw 'error';
         } else {
-          console.log('error: ', data);
+          return response.json();
         }
-      });
+      })
+      .then(data => {
+        this.props.loadUser(data);
+        this.props.onRouteChange('home');
+      })
+      .catch(error => console.log('Error', error));
   };
 
   render() {
