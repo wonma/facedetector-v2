@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './ScoreAlarm.css';
 
-const ScoreAlarm = ({ boxScore }) => {
-  if (boxScore.active === true) {
-    return (
-      <div className='scoreAlarm animate slide-up'>+ {boxScore.score}</div>
-    );
-  }
+const ScoreAlarm = props => {
+  return (
+    <div
+      id='scoreAlarm'
+      className={`scoreAlarm animate slide-up ${props.boxScore.active}`}
+    >
+      + {props.boxScore.score}
+    </div>
+  );
 };
 
 export default ScoreAlarm;

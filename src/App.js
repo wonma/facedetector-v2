@@ -30,7 +30,7 @@ class App extends React.Component {
       },
       route: 'login',
       boxScore: {
-        active: false,
+        active: '',
         score: null
       }
     };
@@ -78,30 +78,44 @@ class App extends React.Component {
     this.setState({
       boxes: [],
       imgUrl: this.state.input,
-      boxScore: { active: false }
+      boxScore: { active: '' }
     });
-
     const { totalScore, totalCredit } = this.state.user;
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
       .then(response => {
         const dataArray = response.outputs[0].data.regions;
         this.updateBoxState(this.calculateBox(dataArray));
-        console.log(dataArray);
         this.setState({
           boxScore: {
-            active: true,
+            active: 'active',
             score: dataArray.length * 10
           }
         });
 
-        this.setState({
-          user: {
-            ...this.state.user,
-            totalScore: totalScore + dataArray.length * 10,
-            totalCredit: totalCredit - 10
-          }
-        });
+        fetch('http://localhost:5000/image', {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: this.state.user.id,
+            totalScore: totalScore + dataArray.length * 10
+          })
+        })
+          .then(response => response.json())
+          .then(({ totalScore, totalCredit }) => {
+            this.setState({
+              user: Object.assign(this.state.user, {
+                totalScore: totalScore,
+                totalCredit: totalCredit
+              })
+            });
+            setTimeout(() => {
+              document.querySelector('.scoreAlarm').classList.remove('active');
+            }, 1000);
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => {
         console.log(err);

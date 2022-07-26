@@ -6,13 +6,17 @@
   height: 3.5em;
   padding: 1em;
   background: #dcff78;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   margin-left: 20px;
   font-size: 2em;
   opacity: 0;
+}
+
+.scoreAlarm.active {
+  display: flex;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
