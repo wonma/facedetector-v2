@@ -162,7 +162,10 @@ class App extends React.Component {
                   loadUser={this.loadUser}
                 />
               ) : (
-                <SignupForm onRouteChange={this.onRouteChange} />
+                <SignupForm
+                  onRouteChange={this.onRouteChange}
+                  loadUser={this.loadUser}
+                />
               )}
             </div>
           )}

@@ -49,15 +49,18 @@ class SignupForm extends Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(this.state)
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.result === 'success') {
-            console.log(data.user);
-            this.props.onRouteChange('home');
+        .then(response => {
+          if (response.status == 400) {
+            throw 'error';
           } else {
-            console.log('error: ', data);
+            return response.json();
           }
-        });
+        })
+        .then(data => {
+          this.props.loadUser(data);
+          this.props.onRouteChange('home');
+        })
+        .catch(error => console.log('Error', error));
     } else {
       this.setState({ err: { passwordNotMatch: 'active' } });
     }
