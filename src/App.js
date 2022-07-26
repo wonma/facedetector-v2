@@ -25,10 +25,8 @@ class App extends React.Component {
         id: '',
         email: '',
         firstName: '',
-        activity: {
-          totalScore: 0,
-          totalCredit: 0
-        }
+        totalScore: 0,
+        totalCredit: 0
       },
       route: 'login',
       boxScore: {
@@ -70,10 +68,8 @@ class App extends React.Component {
         id: data.id,
         email: data.email,
         firstName: data.firstName,
-        activity: {
-          totalScore: data.activity.totalScore,
-          totalCredit: data.activity.totalCredit
-        }
+        totalScore: data.totalScore,
+        totalCredit: data.totalCredit
       }
     });
   };
@@ -85,22 +81,25 @@ class App extends React.Component {
       boxScore: { active: false }
     });
 
-    const { totalScore, totalCredit } = this.state.user.activity;
+    const { totalScore, totalCredit } = this.state.user;
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', this.state.input)
       .then(response => {
         const dataArray = response.outputs[0].data.regions;
         this.updateBoxState(this.calculateBox(dataArray));
+        console.log(dataArray);
         this.setState({
           boxScore: {
             active: true,
             score: dataArray.length * 10
           }
         });
+
         this.setState({
           user: {
+            ...this.state.user,
             totalScore: totalScore + dataArray.length * 10,
-            credits: totalCredit - 10
+            totalCredit: totalCredit - 10
           }
         });
       })
@@ -140,8 +139,8 @@ class App extends React.Component {
           {this.state.route === 'home' ? (
             <div className='container container-content flex'>
               <UserStatus
-                totalScore={this.state.user.activity.totalScore}
-                totalCredit={this.state.user.activity.totalCredit}
+                totalScore={this.state.user.totalScore}
+                totalCredit={this.state.user.totalCredit}
                 firstName={this.state.user.firstName}
               />
               <DetectorAI

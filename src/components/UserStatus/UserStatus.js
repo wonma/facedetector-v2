@@ -2,6 +2,7 @@ import React from 'react';
 import './UserStatus.css';
 
 const UserStatus = ({ totalScore, totalCredit, firstName }) => {
+  console.log('First Name:  ', firstName);
   return (
     <div className='userStatus'>
       <h2 className='userStatus__title'>Howdy, {firstName}!</h2>

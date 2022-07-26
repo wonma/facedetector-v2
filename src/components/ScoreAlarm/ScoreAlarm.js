@@ -4,9 +4,7 @@ import './ScoreAlarm.css';
 const ScoreAlarm = ({ boxScore }) => {
   if (boxScore.active === true) {
     return (
-      <div className='scoreAlarm animate slide-up delay-1'>
-        + {boxScore.score}
-      </div>
+      <div className='scoreAlarm animate slide-up'>+ {boxScore.score}</div>
     );
   }
 };
