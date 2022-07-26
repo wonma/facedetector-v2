@@ -8,7 +8,11 @@ class SignupForm extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm: '',
+      err: {
+        passwordNotMatch: ''
+      }
     };
   }
   onFirstNameChange = e => {
@@ -27,22 +31,36 @@ class SignupForm extends Component {
     this.setState({ password: e.target.value });
   };
 
+  onPasswordConfirmChange = e => {
+    this.setState({
+      passwordConfirm: e.target.value,
+      err: {
+        passwordNotMatch: ''
+      }
+    });
+  };
+
   onSignupSubmit = e => {
     e.preventDefault();
-    fetch('http://localhost:5000/register', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state)
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 'success') {
-          console.log(data.user);
-          this.props.onRouteChange('home');
-        } else {
-          console.log('error: ', data);
-        }
-      });
+    console.log(this.state.password);
+    if (this.state.password === this.state.passwordConfirm) {
+      fetch('http://localhost:5000/register', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.state)
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.result === 'success') {
+            console.log(data.user);
+            this.props.onRouteChange('home');
+          } else {
+            console.log('error: ', data);
+          }
+        });
+    } else {
+      this.setState({ err: { passwordNotMatch: 'active' } });
+    }
   };
 
   render() {
@@ -84,8 +102,18 @@ class SignupForm extends Component {
             />
           </div>
           <div className='form__field'>
-            <label className='form__label'>Password Confirmation</label>
-            <input className='form__input' type='password' />
+            <label className='form__label'>Confirm Password</label>
+            <input
+              onChange={this.onPasswordConfirmChange}
+              className='form__input'
+              type='password'
+            />
+          </div>
+          <div
+            id='err-password-confirm'
+            className={`form__warning ` + this.state.err.passwordNotMatch}
+          >
+            Please make sure your passwords match
           </div>
           <button>Sign up</button>
           <small>

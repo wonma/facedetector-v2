@@ -1,0 +1,16 @@
+.form__warning {
+  color: red;
+  font-size: 14px;
+  background-color: rgb(255, 232, 232);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.form__warning.active {
+  opacity: 1;
+  display: block;
+}
